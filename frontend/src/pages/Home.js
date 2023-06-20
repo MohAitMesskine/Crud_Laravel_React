@@ -25,7 +25,9 @@ function Home (){
 
 
     return (
-        <div>
+        <div className="container">
+             
+             <Link className="btn btn-info" to={{ pathname: "/create" }}>Create User</Link>&nbsp;
             <h2>Users listing ...</h2>
             <table className="table">
                 <thead>
