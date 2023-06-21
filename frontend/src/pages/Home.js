@@ -2,6 +2,7 @@ import React from 'react';
 import { useState,useEffect } from "react";
 import http from "../http";
 import { Link } from "react-router-dom";
+import Footer from "./Footer"
 function Home (){
     const [users, setUsers] = useState([]);
 
@@ -26,12 +27,22 @@ function Home (){
 
     return (
         <div className="container">
-             
-             <Link className="btn btn-info" to={{ pathname: "/create" }}>Create User</Link>&nbsp;
-            <h2>Users listing ...</h2>
-            <table className="table">
+          
+            <div class="container text-center">
+  <div class="row">
+    <div class="col">
+    <Link className="btn btn-info" to={{ pathname: "/create" }}>Create User</Link>&nbsp;
+    </div>
+    <div class="col">
+    <h2>La Listes Utilisateur</h2>
+    </div>
+  
+  </div>
+</div>
+<div  style={{height:"400px",  overflow:"auto"}}>
+            <table className="table" style={{height:"30px",  overflow:"auto"}}>
                 <thead>
-                    <tr>
+                    <tr className="sticky-top">
                         <th>Sno.</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -55,6 +66,8 @@ function Home (){
                     ))}
                 </tbody>
             </table>
+            </div>
+         <footer><Footer /></footer>
         </div>
     )}
 
