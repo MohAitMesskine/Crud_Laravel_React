@@ -12,13 +12,10 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials)) {
             // Authentication passed
-            $user = auth()->user();
-
-            // Return the authenticated user or any other response you need
-            return response()->json(['user' => $user]);
+            return response()->json(['message' => 'Login successful']);
+        } else {
+            // Authentication failed
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
-        // Authentication failed
-        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 }

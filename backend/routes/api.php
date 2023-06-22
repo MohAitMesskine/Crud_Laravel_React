@@ -15,9 +15,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::resource('users',UserController::class);
+
+// Route::post('/login', 'App\Http\Controllers\AuthController@login');
 Route::post('/login', 'AuthController@login');
 

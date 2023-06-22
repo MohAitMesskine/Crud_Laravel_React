@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import http from "../http";
 import { Link } from "react-router-dom";
 import Footer from "./Footer"
+import Navbar from "./Navbar"
 function Home (){
     const [users, setUsers] = useState([]);
 
@@ -23,23 +24,35 @@ function Home (){
         })
     }
 
-
+   
+      
+        const handleFilterChange = (e) =>{ 
+          const filterValue = e.target.value.toLowerCase();
+          const filtered = users.filter((item) =>
+            item.name.toLowerCase().includes(filterValue)
+          );
+          setUsers(filtered);}
+      
+      
 
     return (
-        <div className="container">
-          
+      
+        <div className="">
+        <Navbar />    
             <div class="container text-center">
   <div class="row">
-    <div class="col">
+    <div class="col-sm-5">
+    <span className="fs-3">La Listes des utlisateur</span>
+    </div>
+    <div class="col-sm-5 ">
+    <input type="text"  className="form-control" onChange={handleFilterChange} placeholder="cherchez par Name" />
+  </div>
+    <div class="col-sm-2">
     <Link className="btn btn-info" to={{ pathname: "/create" }}>Create User</Link>&nbsp;
     </div>
-    <div class="col">
-    <h2>La Listes Utilisateur</h2>
-    </div>
-  
   </div>
 </div>
-<div  style={{height:"400px",  overflow:"auto"}}>
+<div className="container" style={{height:"400px",  overflow:"auto"}}>
             <table className="table" style={{height:"30px",  overflow:"auto"}}>
                 <thead>
                     <tr className="sticky-top">

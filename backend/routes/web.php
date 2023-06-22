@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::post('/api/login', 'App\Http\Controllers\AuthController@login');
 Route::get('/', function () {
     return view('welcome');
 });
