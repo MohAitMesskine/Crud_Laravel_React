@@ -28,7 +28,7 @@ export default function AuthUser(){
 
         setToken(token);
         setUser(user);
-        navigate('/dashboard');
+        navigate('/');
     }
 
     const logout = () => {
@@ -40,7 +40,8 @@ export default function AuthUser(){
         baseURL:"http://localhost:8000/api",
         headers:{
             "Content-type" : "application/json",
-            "Authorization" : `Bearer ${token}`
+            "Authorization" : `Bearer ${token}`,
+            
         }
     });
     return {

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +20,7 @@ use App\Http\Controllers\AuthController;
 //     return $request->user();
 // });
 Route::resource('users',UserController::class);
-
+Route::post('/contacts', [ContactController::class, 'store']);
 // Route::post('/login', 'App\Http\Controllers\AuthController@login');
 // Route::post('/login', 'AuthController@login');
 
