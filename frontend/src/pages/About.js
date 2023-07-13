@@ -1,83 +1,77 @@
-import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+const ImageUpload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [images, setImages] = useState([]);
 
-const About = () => {
-  const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [image, setImage] = useState(null);
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setImage(URL.createObjectURL(file));
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    axios
+      .post('http://localhost:8000/api/images', formData)
+      .then((response) => {
+        console.log(response.data.message);
+        fetchImages();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const handleBioChange = (e) => {
-    setBio(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // You can perform additional actions here, such as submitting the form data to an API
-
-    // Clear form fields
-    setName('');
-    setBio('');
-    setImage(null);
-	console.log(setImage);
+  const fetchImages = () => {
+    axios
+      .get('http://localhost:8000/api/images')
+      .then((response) => {
+        setImages(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
-    <div>
-      <h2>Profile</h2>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label for="name">Name</Label>
-          <Input
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={handleNameChange}
-            placeholder="Enter your name"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="bio">Bio</Label>
-          <Input
-            type="textarea"
-            name="bio"
-            id="bio"
-            value={bio}
-            onChange={handleBioChange}
-            placeholder="Enter a short bio"
-          />
-        </FormGroup>
-         <Form.Group controlId="formBasicImage">
-              <Form.Label>Profile Picture</Form.Label>
-              <Form.Control type="file" accept="image/*" onChange={handleImageUpload} />
-            </Form.Group>
+    <div className="container">
+       <div className="row">
+      <div className="col-md-6 offset-md-3">
+        <div className="card mt-5">
+          <div className="card-body">
+            <h5 className="card-title text-center">User Profile</h5>
+            <hr></hr>
+    
+      
 
-            {image && (
-              <div>
-                <h6>Preview:</h6>
-                <img src={image} alt="Profile" style={{ maxWidth: '100%', height: 'auto' }} />
-              </div>
-            )}
-        <Button color="primary" type="submit">Save</Button>
-      </Form>
+      {images.map((image) => (
+        <img
+          key={image.id}
+          src={`http://localhost:8000/uploads/${image.file_path}`}
+          alt="Uploaded"
+          style={{ width: '200px', height: 'auto' }}
+          className="card-img-top rounded-circle mx-auto d-block"
+        />
+      ))}
+           <h6 class="card-subtitle mt-2 text-muted text-center">Mohamed Ait Messkine</h6>
+            <p class="card-text text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae eros
+              nulla. Vestibulum feugiat sem a metus aliquet, vitae fermentum ipsum lobortis. Donec vitae ex vitae nunc
+              bibendum aliquet ac sit amet turpis.</p>
+            <div class="text-center">
+              <input class="custom-file-input" type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload} class="btn btn-primary mt-3">Upload</button>
+            </div>
+      </div>
+      </div>
+      </div>
+      </div>
     </div>
   );
 };
 
-export default About;
-
-
+export default ImageUpload;

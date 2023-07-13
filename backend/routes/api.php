@@ -38,3 +38,6 @@ Route::group(['middleware'=>'api'],function(){
     Route::post('me', [AuthController::class,'me']);
 });
 
+Route::post('/images', 'App\Http\Controllers\ImageController@store');
+// Route::get('/images', 'App\Http\Controllers\ImageController@index');
+Route::get('/images', 'App\Http\Controllers\ImageController@index');
